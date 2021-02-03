@@ -1,0 +1,90 @@
+[submodule "submodules/d3/d3-array"]
+	path = submodules/d3/d3-array
+	url = https://github.com/d3/d3-array
+[submodule "submodules/d3/d3-axis"]
+	path = submodules/d3/d3-axis
+	url = https://github.com/d3/d3-axis
+[submodule "submodules/d3/d3-brush"]
+	path = submodules/d3/d3-brush
+	url = https://github.com/d3/d3-brush
+[submodule "submodules/d3/d3-chord"]
+	path = submodules/d3/d3-chord
+	url = https://github.com/d3/d3-chord
+[submodule "submodules/d3/d3-color"]
+	path = submodules/d3/d3-color
+	url = https://github.com/d3/d3-color
+[submodule "submodules/d3/d3-contour"]
+	path = submodules/d3/d3-contour
+	url = https://github.com/d3/d3-contour
+[submodule "submodules/d3/d3-delaunay"]
+	path = submodules/d3/d3-delaunay
+	url = https://github.com/d3/d3-delaunay
+[submodule "submodules/d3/d3-dispatch"]
+	path = submodules/d3/d3-dispatch
+	url = https://github.com/d3/d3-dispatch
+[submodule "submodules/d3/d3-drag"]
+	path = submodules/d3/d3-drag
+	url = https://github.com/d3/d3-drag
+[submodule "submodules/d3/d3-dsv"]
+	path = submodules/d3/d3-dsv
+	url = https://github.com/d3/d3-dsv
+[submodule "submodules/d3/d3-ease"]
+	path = submodules/d3/d3-ease
+	url = https://github.com/d3/d3-ease
+[submodule "submodules/d3/d3-fetch"]
+	path = submodules/d3/d3-fetch
+	url = https://github.com/d3/d3-fetch
+[submodule "submodules/d3/d3-force"]
+	path = submodules/d3/d3-force
+	url = https://github.com/d3/d3-force
+[submodule "submodules/d3/d3-format"]
+	path = submodules/d3/d3-format
+	url = https://github.com/d3/d3-format
+[submodule "submodules/d3/d3-geo"]
+	path = submodules/d3/d3-geo
+	url = https://github.com/d3/d3-geo
+[submodule "submodules/d3/d3-hierarchy"]
+	path = submodules/d3/d3-hierarchy
+	url = https://github.com/d3/d3-hierarchy
+[submodule "submodules/d3/d3-interpolate"]
+	path = submodules/d3/d3-interpolate
+	url = https://github.com/d3/d3-interpolate
+[submodule "submodules/d3/d3-path"]
+	path = submodules/d3/d3-path
+	url = https://github.com/d3/d3-path
+[submodule "submodules/d3/d3-polygon"]
+	path = submodules/d3/d3-polygon
+	url = https://github.com/d3/d3-polygon
+[submodule "submodules/d3/d3-quadtree"]
+	path = submodules/d3/d3-quadtree
+	url = https://github.com/d3/d3-quadtree
+[submodule "submodules/d3/d3-random"]
+	path = submodules/d3/d3-random
+	url = https://github.com/d3/d3-random
+[submodule "submodules/d3/d3-scale"]
+	path = submodules/d3/d3-scale
+	url = https://github.com/d3/d3-scale
+[submodule "submodules/d3/d3-scale-chromatic"]
+	path = submodules/d3/d3-scale-chromatic
+	url = https://github.com/d3/d3-scale-chromatic
+[submodule "submodules/d3/d3-selection"]
+	path = submodules/d3/d3-selection
+	url = https://github.com/d3/d3-selection
+[submodule "submodules/d3/d3-shape"]
+	path = submodules/d3/d3-shape
+	url = https://github.com/d3/d3-shape
+[submodule "submodules/d3/d3-time"]
+	path = submodules/d3/d3-time
+	url = https://github.com/d3/d3-time
+[submodule "submodules/d3/d3-time-format"]
+	path = submodules/d3/d3-time-format
+	url = https://github.com/d3/d3-time-format
+[submodule "submodules/d3/d3-timer"]
+	path = submodules/d3/d3-timer
+	url = https://github.com/d3/d3-timer
+[submodule "submodules/d3/d3-transition"]
+	path = submodules/d3/d3-transition
+	url = https://github.com/d3/d3-transition
+[submodule "submodules/d3/d3-zoom"]
+	path = submodules/d3/d3-zoom
+	url = https://github.com/d3/d3-zoom
