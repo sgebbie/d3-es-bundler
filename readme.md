@@ -29,7 +29,8 @@ This follows the basic steps:
 - fetch all d3 source packages by cloning the relevant git repositories
 - fetch extra dependencies by cloning the relevant git repositories
 - generate a grouping module
-- use `rollup` to compile a standalone ES module for D3
+- apply `rollup` (using a custom resolver) to compile a standalone ES module for
+  D3
 - enjoy using D3
 
 [mozesmod]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules "JavaScript ES Modules"
