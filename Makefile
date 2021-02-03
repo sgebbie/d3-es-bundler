@@ -1,7 +1,12 @@
+# Resystems (Stewart Gebbie)
+# D3 ES Bundler
+#
+# This pulls down the D3 code base and builds a standalone
+# ES compliant Javascript module that can be imported as-is.
+
 default: build/d3.es.js
 
-.git:
-	git init
+all: default
 
 D3_MODULES = 			\
 	d3-array			\
@@ -39,20 +44,22 @@ D3_DEP =										\
 	https://github.com/mbostock/internmap.git	\
 	https://github.com/mapbox/delaunator.git	\
 
-##
-
-update:
-	git submodule foreach git pull
-
-
-# npm install --save-dev rollup-plugin-terser
-
-build/d3.es.js: build/index.js | build
+# merged output
+build/d3.es.js: build/index.js | build rollup
 	@echo "[ bootstrap rollup ]"
 	@cp rollup.config.js build
 	@cp d3-rollup-resolver.js build
 	@echo "[ rollup to $@ ]"
 	@cd build && rollup -c rollup.config.js
+
+# main set of imports
+build/index.js: add-d3-modules | build
+	@echo "[ constructing index.js ]"
+	@for d3m in $(D3_MODULES); do			\
+		echo "export * from \"./modules/d3/$${d3m}/index.js\";";	\
+	done > $@
+
+## -- directories
 
 build:
 	@mkdir -p build
@@ -66,11 +73,12 @@ submodules/dep:
 build/modules/d3: | build
 	@mkdir -p $@
 
-build/index.js: add-d3-modules | build
-	@echo "[ constructing index.js ]"
-	@for d3m in $(D3_MODULES); do			\
-		echo "export * from \"./modules/d3/$${d3m}/index.js\";";	\
-	done > $@
+## -- imports
+
+D3_MODULES_SUB=$(D3_MODULES:%=submodules/d3/%)
+
+D3_DEP_BASE=$(foreach dep,$(D3_DEP),$(basename $(notdir $(dep))))
+D3_DEP_SUB=$(D3_DEP_BASE:%=submodules/dep/%)
 
 add-d3-modules: add-d3-submodules | build/modules/d3
 	@echo "[ linking submodules ]"
@@ -79,15 +87,6 @@ add-d3-modules: add-d3-submodules | build/modules/d3
 		[ ! -L $${d3m} ] && ln -sf ../../../submodules/d3/$${d3m}/src $${d3m};	\
 		true;																	\
 	done
-
-D3_MODULES_SUB=$(D3_MODULES:%=submodules/d3/%)
-D3_DEP_BASE=$(foreach dep,$(D3_DEP),$(basename $(notdir $(dep))))
-D3_DEP_SUB=$(D3_DEP_BASE:%=submodules/dep/%)
-
-d3-dep:
-	echo $(D3_DEP)
-	echo $(D3_DEP_BASE)
-	echo $(D3_DEP_SUB)
 
 add-d3-submodules: | $(D3_MODULES_SUB) $(D3_DEP_SUB)
 
@@ -99,5 +98,33 @@ $(D3_DEP_SUB): | .git submodules/dep
 	@echo "[dep: $(notdir $@)]"
 	git submodule add $(filter %$(notdir $@).git,$(D3_DEP)) $@
 
+## -- build tools
+
+# If producing a .min.js version
+# npm install --save-dev rollup-plugin-terser
+
+update:
+	git submodule foreach git pull
+
+.git: | tooling
+	git init
+
+tooling: | rollup git
+
+tooling-note:
+	@echo "[ checking tooling ]"
+
+rollup: tooling-note
+	@which rollup > /dev/null || ( echo "Please install 'rollup' on your path: https://rollupjs.org/" && false )
+
+git: tooling-note
+	@which git > /dev/null || ( echo "Please git on your path." && false )
+
+## -- clean-up
+
 clean:
 	rm -rf build
+
+.PHONY: tooling tooling-note git rollup
+.PHONY: add-d3-submodules add-d3-modules update
+.PHONY: clean all default
