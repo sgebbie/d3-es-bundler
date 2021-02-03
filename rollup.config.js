@@ -18,7 +18,7 @@ export default [
 //       ascii(),
 //       terser(),
 //		nodeResolve(), - didn't seem to solve the resolving of non-conformant module paths
-		d3RollupResolver(),
+		d3RollupResolver(false),
     ],
     output: {
       extend: true,

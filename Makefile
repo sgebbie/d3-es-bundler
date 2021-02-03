@@ -1,4 +1,4 @@
-default: build/index.js
+default: build/d3.es.js
 
 .git:
 	git init
@@ -41,25 +41,30 @@ D3_DEP =										\
 
 ##
 
+update:
+	git submodule foreach git pull
+
 
 # npm install --save-dev rollup-plugin-terser
 
 build/d3.es.js: build/index.js | build
-	cp rollup.config.js build
-	cp d3-rollup-resolver.js build
-	cd build && rollup -c rollup.config.js
+	@echo "[ bootstrap rollup ]"
+	@cp rollup.config.js build
+	@cp d3-rollup-resolver.js build
+	@echo "[ rollup to $@ ]"
+	@cd build && rollup -c rollup.config.js
 
 build:
-	mkdir -p build
+	@mkdir -p build
 
 submodules/d3:
-	mkdir -p $@
+	@mkdir -p $@
 
 submodules/dep:
-	mkdir -p $@
+	@mkdir -p $@
 
 build/modules/d3: | build
-	mkdir -p $@
+	@mkdir -p $@
 
 build/index.js: add-d3-modules | build
 	@echo "[ constructing index.js ]"
