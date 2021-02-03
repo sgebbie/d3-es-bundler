@@ -1,3 +1,4 @@
+default: build/index.js
 
 .git:
 	git init
@@ -34,6 +35,16 @@ D3_MODULES = 			\
 	d3-transition		\
 	d3-zoom				\
 
+##
+
+
+# npm install --save-dev rollup-plugin-terser
+
+build/d3.es.js: build/index.js | build
+	cp rollup.config.js build
+	cp d3-rollup-resolver.js build
+	cd build && rollup -c rollup.config.js
+
 build:
 	mkdir -p build
 
@@ -44,12 +55,14 @@ build/modules/d3: | build
 	mkdir -p $@
 
 build/index.js: add-d3-modules | build
-	for d3m in $(D3_MODULES); do			\
-		echo "export * from \"$${d3m}\";";	\
+	@echo "[ constructing index.js ]"
+	@for d3m in $(D3_MODULES); do			\
+		echo "export * from \"./modules/d3/$${d3m}/index.js\";";	\
 	done > $@
 
 add-d3-modules: add-d3-submodules | build/modules/d3
-	cd $(firstword $|);															\
+	@echo "[ linking submodules ]"
+	@cd $(firstword $|);															\
 	for d3m in $(D3_MODULES); do												\
 		[ ! -L $${d3m} ] && ln -sf ../../../submodules/d3/$${d3m}/src $${d3m};	\
 		true;																	\
