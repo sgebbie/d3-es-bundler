@@ -1,0 +1,27 @@
+{
+	"name": "d3",
+	"version": "(git master)",
+	"description": "Data-Driven Documents",
+	"keywords": [
+		"dom",
+		"visualization",
+		"svg",
+		"animation",
+		"canvas"
+	],
+	"homepage": "https://d3js.org",
+	"license": "BSD-3-Clause",
+	"author": {
+		"name": "Mike Bostock",
+		"url": "https://bost.ocks.org/mike"
+	},
+	"packager" : {
+		"homepage": "https://resystems.io",
+		"license": "MIT",
+		"organisation": "Resystems",
+		"author": {
+			"name": "Stewart Gebbie",
+			"url": "https://gebbie.co.za"
+		}
+	}
+}

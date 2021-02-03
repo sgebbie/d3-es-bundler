@@ -45,10 +45,10 @@ D3_DEP =										\
 	https://github.com/mapbox/delaunator.git	\
 
 # merged output
-build/d3.es.js: build/index.js | build rollup
+#	@cp d3-rollup-resolver.js build
+build/d3.es.js: build/index.js rollup.config.js package.json | build rollup
 	@echo "[ bootstrap rollup ]"
 	@cp rollup.config.js build
-	@cp d3-rollup-resolver.js build
 	@echo "[ rollup to $@ ]"
 	@cd build && rollup -c rollup.config.js
 
