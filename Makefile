@@ -35,6 +35,10 @@ D3_MODULES = 			\
 	d3-transition		\
 	d3-zoom				\
 
+D3_DEP =										\
+	https://github.com/mbostock/internmap.git	\
+	https://github.com/mapbox/delaunator.git	\
+
 ##
 
 
@@ -49,6 +53,9 @@ build:
 	mkdir -p build
 
 submodules/d3:
+	mkdir -p $@
+
+submodules/dep:
 	mkdir -p $@
 
 build/modules/d3: | build
@@ -69,11 +76,23 @@ add-d3-modules: add-d3-submodules | build/modules/d3
 	done
 
 D3_MODULES_SUB=$(D3_MODULES:%=submodules/d3/%)
+D3_DEP_BASE=$(foreach dep,$(D3_DEP),$(basename $(notdir $(dep))))
+D3_DEP_SUB=$(D3_DEP_BASE:%=submodules/dep/%)
 
-add-d3-submodules: | $(D3_MODULES_SUB)
+d3-dep:
+	echo $(D3_DEP)
+	echo $(D3_DEP_BASE)
+	echo $(D3_DEP_SUB)
+
+add-d3-submodules: | $(D3_MODULES_SUB) $(D3_DEP_SUB)
 
 $(D3_MODULES_SUB): | .git submodules/d3
+	@echo "[d3: $(notdir $@)]"
 	git submodule add https://github.com/d3/$(notdir $@) $@
+
+$(D3_DEP_SUB): | .git submodules/dep
+	@echo "[dep: $(notdir $@)]"
+	git submodule add $(filter %$(notdir $@).git,$(D3_DEP)) $@
 
 clean:
 	rm -rf build

@@ -1,11 +1,10 @@
-// import { nodeResolve } from "@rollup/plugin-node-resolve";
 // import ascii from "rollup-plugin-ascii";
 // import {terser} from "rollup-plugin-terser";
 // import * as meta from "./package.json";
 import { d3RollupResolver } from './d3-rollup-resolver.js';
 
 //const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
-const copyright = 'D3 ES package by Resystems (Stewart Gebbie)'
+const copyright = '// D3 ES packaged by Resystems (Stewart Gebbie)'
 
 function onwarn(message, warn) {
   if (message.code === "CIRCULAR_DEPENDENCY") return;
