@@ -53,7 +53,7 @@ build/d3.es.js: build/index.js | build rollup
 	@cd build && rollup -c rollup.config.js
 
 # main set of imports
-build/index.js: add-d3-modules | build
+build/index.js: link-d3-modules | build
 	@echo "[ constructing index.js ]"
 	@for d3m in $(D3_MODULES); do			\
 		echo "export * from \"./modules/d3/$${d3m}/index.js\";";	\
@@ -80,7 +80,7 @@ D3_MODULES_SUB=$(D3_MODULES:%=submodules/d3/%)
 D3_DEP_BASE=$(foreach dep,$(D3_DEP),$(basename $(notdir $(dep))))
 D3_DEP_SUB=$(D3_DEP_BASE:%=submodules/dep/%)
 
-add-d3-modules: add-d3-submodules | build/modules/d3
+link-d3-modules: update-d3-submodules | build/modules/d3
 	@echo "[ linking submodules ]"
 	@cd $(firstword $|);															\
 	for d3m in $(D3_MODULES); do												\
@@ -88,7 +88,14 @@ add-d3-modules: add-d3-submodules | build/modules/d3
 		true;																	\
 	done
 
-add-d3-submodules: | $(D3_MODULES_SUB) $(D3_DEP_SUB)
+update-d3-submodules: | $(D3_GIT_SUBMODULES)
+
+D3_GIT_SUBMODULES=$(D3_DEP_SUB:%=%/.git) $(D3_MODULES_SUB:%=%/.git)
+
+$(D3_GIT_SUBMODULES): $(D3_MODULES_SUB) $(D3_DEP_SUB)
+	@echo "[ fetching submodules ]"
+	@git submodule init
+	@git submodule update -j 4
 
 $(D3_MODULES_SUB): | .git submodules/d3
 	@echo "[d3: $(notdir $@)]"
@@ -102,7 +109,6 @@ $(D3_DEP_SUB): | .git submodules/dep
 
 # If producing a .min.js version
 # npm install --save-dev rollup-plugin-terser
-
 
 init:
 	git submodule init
@@ -131,5 +137,5 @@ clean:
 	rm -rf build
 
 .PHONY: tooling tooling-note git rollup
-.PHONY: add-d3-submodules add-d3-modules update
+.PHONY: update-d3-submodules link-d3-modules update
 .PHONY: clean all default
