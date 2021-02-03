@@ -103,7 +103,12 @@ $(D3_DEP_SUB): | .git submodules/dep
 # If producing a .min.js version
 # npm install --save-dev rollup-plugin-terser
 
-update:
+
+init:
+	git submodule init
+	git submodule update
+
+pull:
 	git submodule foreach git pull
 
 .git: | tooling
