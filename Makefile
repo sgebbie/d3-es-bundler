@@ -88,11 +88,11 @@ link-d3-modules: update-d3-submodules | build/modules/d3
 		true;																	\
 	done
 
-update-d3-submodules: | $(D3_GIT_SUBMODULES)
-
 D3_GIT_SUBMODULES=$(D3_DEP_SUB:%=%/.git) $(D3_MODULES_SUB:%=%/.git)
 
-$(D3_GIT_SUBMODULES): $(D3_MODULES_SUB) $(D3_DEP_SUB)
+update-d3-submodules: | $(D3_GIT_SUBMODULES)
+
+$(D3_GIT_SUBMODULES) &: | $(D3_MODULES_SUB) $(D3_DEP_SUB)
 	@echo "[ fetching submodules ]"
 	@git submodule init
 	@git submodule update -j 4
