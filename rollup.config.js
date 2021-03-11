@@ -1,5 +1,5 @@
 // import ascii from "rollup-plugin-ascii";
-// import {terser} from "rollup-plugin-terser";
+import { terser } from "rollup-plugin-terser";
 import * as meta from "../package.json";
 import { d3RollupResolver } from '../d3-rollup-resolver.js';
 
@@ -10,13 +10,11 @@ if (message.code === "CIRCULAR_DEPENDENCY") return;
 	warn(message);
 }
 
-export default [
+const config =
 	{
 		input: "index.js",
 		plugins: [
 			d3RollupResolver(false),
-			//	ascii(),
-			//	terser(),
 		],
 		output: {
 			extend: true,
@@ -27,5 +25,21 @@ export default [
 			name: "D3"
 		},
 		onwarn
+	};
+
+export default [
+	// default config
+	config,
+	// config overlayed with .min.js
+	{
+		...config,
+		plugins: [
+			...config.plugins,
+			terser(),
+		],
+		output: {
+			...config.output,
+			file: "d3.es.min.js",
+		},
 	},
 ];

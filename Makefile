@@ -44,9 +44,11 @@ D3_DEP =										\
 	https://github.com/mbostock/internmap.git	\
 	https://github.com/mapbox/delaunator.git	\
 
+D3_ES=build/d3.es.js build/d3.es.min.js
+
 # merged output
 #	@cp d3-rollup-resolver.js build
-build/d3.es.js: build/index.js rollup.config.js package.json | build rollup
+$(D3_ES)&: build/index.js rollup.config.js package.json | build rollup
 	@echo "[ bootstrap rollup ]"
 	@cp rollup.config.js build
 	@echo "[ rollup to $@ ]"
@@ -126,7 +128,7 @@ tooling-note:
 	@echo "[ checking tooling ]"
 
 rollup: tooling-note
-	@which rollup > /dev/null || ( echo "Please install 'rollup' on your path: https://rollupjs.org/" && false )
+	@which rollup > /dev/null || ( echo "Please install 'rollup' on your path: https://rollupjs.org/" && echo "Please 'npm install rollup-plugin-terser'" && false )
 
 git: tooling-note
 	@which git > /dev/null || ( echo "Please git on your path." && false )
