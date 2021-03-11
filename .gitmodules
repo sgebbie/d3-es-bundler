@@ -91,6 +91,7 @@
 [submodule "submodules/dep/internmap"]
 	path = submodules/dep/internmap
 	url = https://github.com/mbostock/internmap.git
+	branch = main
 [submodule "submodules/dep/delaunator"]
 	path = submodules/dep/delaunator
 	url = https://github.com/mapbox/delaunator.git
