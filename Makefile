@@ -39,6 +39,11 @@ D3_MODULES = 			\
 	d3-timer			\
 	d3-transition		\
 	d3-zoom				\
+						\
+	d3-queue			\
+
+D3_MODULES_EXPLICIT =				\
+	./modules/d3/d3-queue/queue.js	\
 
 D3_DEP =										\
 	https://github.com/mbostock/internmap.git	\

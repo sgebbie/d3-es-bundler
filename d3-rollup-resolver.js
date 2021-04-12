@@ -7,18 +7,24 @@ export default function d3RollupResolver (show) {
 			let redirected = null; // default to null so that other sources are handled in the usual way
 			// use cwd() since a pure relative path seems to fail some times
 			let base = process.cwd() + "/.."
+			if (show) console.log("Resolving source=[" + source + "]...");
+
+			// special case for d3-queue which does not have 'index.js'
+			if (/d3-queue\/index.js/.test(source)) {
+				redirected = base + "/build/modules/d3/d3-queue/queue.js";
+			}
 
 			// resolve internal d3 modules
-			if (/^d3-.*/.test(source)) {
+			if (!redirected && /^d3-.*/.test(source)) {
 				// this signals that rollup should not ask other plugins or check the file system to find this id
 				redirected = base + "/build/modules/d3/" + source + "/index.js";
 			}
 
 			// resolve dependency special cases
-			if (/internmap/.test(source)) {
+			if (!redirected && /internmap/.test(source)) {
 				redirected = base + "/submodules/dep/" + source + "/src/index.js";
 			}
-			if (/delaunator/.test(source)) {
+			if (!redirected && /delaunator/.test(source)) {
 				redirected = base + "/submodules/dep/" + source + "/index.js";
 			}
 
