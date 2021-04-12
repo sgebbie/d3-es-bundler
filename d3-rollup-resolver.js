@@ -10,8 +10,11 @@ export default function d3RollupResolver (show) {
 			if (show) console.log("Resolving source=[" + source + "]...");
 
 			// special case for d3-queue which does not have 'index.js'
-			if (/d3-queue\/index.js/.test(source)) {
-				redirected = base + "/build/modules/d3/d3-queue/queue.js";
+			if (!redirected && /d3-queue\/index.js/.test(source)) {
+				redirected = base + "/build/d3-queue-index.js";
+			}
+			if (!redirected && /d3-queue\/queue.js/.test(source)) {
+				redirected = base + "/build/modules/d3/" + source;
 			}
 
 			// resolve internal d3 modules

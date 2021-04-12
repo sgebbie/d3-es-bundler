@@ -53,7 +53,7 @@ D3_ES=build/d3.es.js build/d3.es.min.js
 
 # merged output
 #	@cp d3-rollup-resolver.js build
-$(D3_ES)&: build/index.js rollup.config.js package.json | build rollup
+$(D3_ES)&: build/index.js rollup.config.js package.json build/d3-queue-index.js | build rollup
 	@echo "[ bootstrap rollup ]"
 	@cp rollup.config.js build
 	@echo "[ rollup to $@ ]"
@@ -65,6 +65,10 @@ build/index.js: link-d3-modules | build
 	@for d3m in $(D3_MODULES); do			\
 		echo "export * from \"./modules/d3/$${d3m}/index.js\";";	\
 	done > $@
+
+build/d3-queue-index.js: | build
+	@echo "import queue from './d3-queue/queue.js';" > $@
+	@echo "export { queue };" >> $@
 
 ## -- directories
 
